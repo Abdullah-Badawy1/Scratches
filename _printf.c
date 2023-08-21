@@ -1,8 +1,12 @@
 #include "main.h"
 
+void print_int(int n);
+
 int _printf(const char *format, ...)
 {
-	int i;
+	int counter = 0;
+	int i = 0;
+	int n;
 	char *s;
 	char c;
 
@@ -15,43 +19,71 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 
-	for (i = 0; format[i] != '\0'; i++)
+	while (format[i])
 	{
-		if (format[i] != '%')
-		{
-			putchar(format[i]);
-		}
-		else
+		counter++;
+		if (format[i] == '%')
 		{
 			i++;
-
 			if (format[i] == '\0')
 			{
 				break;
 			}
 
-			if (format[i] == '%')
+			switch (format[i])
 			{
-				putchar('%');
-			}
-			else if (format[i] == 'c')
-			{
-				c = va_arg(args, int);
-				putchar(c);
-			}
-			else if (format[i] == 's')
-			{
-				s = va_arg(args, char *);
-				while (*s)
+				case 'i':
+				case 'd':
 				{
-					putchar(*s);
-					s++;
+					n = va_arg(args, int);
+					print_int(n);
+					break;
 				}
+				case 'c':
+				{
+					c = va_arg(args, int);
+					putchar(c);
+					break;
+				}
+				case 's':
+				{
+					s = va_arg(args, char *);
+					while (*s)
+					{
+						putchar(*s);
+						s++;
+					}
+					break;
+				}
+				case '%':
+					putchar('%');
+					break;
+				default:
+					putchar(format[i]);
+					break;
 			}
 		}
+		else
+		{
+			putchar(format[i]);
+		}
+		i++;
 	}
 
 	va_end(args);
 
-	return (i);
+	return (counter);
+}
+
+
+void print_int(int n)
+{
+	int i;
+	char buffer[30];
+	int value = snprintf(buffer, sizeof(buffer), "%d", n);
+
+	for (i = 0; i < value; i++)
+	{
+		putchar(buffer[i]);
+	}
 }
