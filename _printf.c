@@ -2,6 +2,12 @@
 
 void print_int(int n);
 
+/**
+ * _printf - Function works like printf.
+ * @format: The formated string.
+ * Return: The length.
+ */
+
 int _printf(const char *format, ...)
 {
 	int counter = 0;
@@ -75,6 +81,10 @@ int _printf(const char *format, ...)
 	return (counter);
 }
 
+/**
+ * print_int - Print integers.
+ * @n: The printed value.
+ */
 
 void print_int(int n)
 {
